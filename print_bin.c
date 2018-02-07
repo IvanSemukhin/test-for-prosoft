@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include <math.h>
 
-#define SIZE_TETR 4
+#define TETR 4
 
-typedef unsigned long int DWORD;
-typedef unsigned char UBYTE;
+typedef unsigned long int UINT;
+typedef unsigned char BYTE;
 
-void print_bin(DWORD num);
+void print_bin(UINT num);
 
 int main()
 {
-	printf("sizeof(unsigned long int) = [%ld]\n\n",
-			sizeof(unsigned long int));
+	printf("sizeof(UINT) = [%ld]\n\n", sizeof(UINT));
 	print_bin(0);
 	print_bin(1);
 	print_bin(5);
@@ -31,23 +30,21 @@ int main()
 	return 0;
 }
 
-void print_bin(DWORD num)
+void print_bin(UINT num)
 {
 	if(0 == num){
 		puts("|0000|");
 		return;
 	}
 		
-	UBYTE kol_bit = log2(num)+1;
-	UBYTE kol_iter = SIZE_TETR *(kol_bit%SIZE_TETR ?
-								 kol_bit/SIZE_TETR+1 :
-								 kol_bit/SIZE_TETR);
+	BYTE kol_bit = log2(num)+1;
+	BYTE kol_iter = TETR*(kol_bit%TETR ? kol_bit/TETR+1 : kol_bit/TETR);
 
-	DWORD start = 1UL << (kol_iter-1);
+	UINT start = 1UL << (kol_iter-1);
 	
 	printf("|");
-	for(DWORD i=0; i < kol_iter; i++){
-		if(!(i%SIZE_TETR) && i!=0)
+	for(UINT i=0; i < kol_iter; i++){
+		if(!(i%TETR) && i!=0)
 			printf("|");
 		printf("%d", (num & (start>>i)) ? 1 : 0);
 	}
